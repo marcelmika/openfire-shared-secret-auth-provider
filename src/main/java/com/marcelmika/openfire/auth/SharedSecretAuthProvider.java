@@ -10,8 +10,12 @@ import org.jivesoftware.util.Log;
 
 public class SharedSecretAuthProvider implements AuthProvider {
 
+    // Provides configuration for the shared secret auth provider
+    private final Config config;
+
+
     public SharedSecretAuthProvider() {
-        // Needs to to be here otherwise the plugin wouldn't work
+        this.config = new Config();
     }
 
     /**
@@ -59,7 +63,16 @@ public class SharedSecretAuthProvider implements AuthProvider {
             Log.debug(String.format("Username: %s logged with shared secret: %s", username, password));
         }
 
-        String sharedSecret = "12345";
+        // Get the shared secret from config
+        String sharedSecret = config.getSharedSecret();
+
+        // Shred secret is not defined
+        if (sharedSecret == null) {
+            // Log
+            Log.error("Shared secret is not defined");
+            // Fail the authentication
+            throw new InternalUnauthenticatedException("Shared secret is not defined");
+        }
 
         // Check the shared secret
         if (!password.equals(sharedSecret)) {

@@ -29,3 +29,10 @@ Installation
 		
 Configuration
 -------------
+
+The following properties are available:
+
+| Property | Description | Required? |
+| -------- | ----------- | --------- |
+| `sharedSecretAuthProvider.sharedSecret` | Fill in the shared secret used for the authentication. Make the secret as hard to guess as possible. | Yes |
+
